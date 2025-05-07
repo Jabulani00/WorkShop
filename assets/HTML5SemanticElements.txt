@@ -1,0 +1,184 @@
+HTML5 Semantic Elements Cheatsheet (.txt)
+
+
+HTML5 Semantic Elements Cheatsheet
+----------------------------------
+
+1. <header>      - Defines introductory content or navigation links.
+2. <nav>         - Represents navigation links.
+3. <main>        - Specifies the main content of a document.
+4. <section>     - Defines a thematic grouping of content.
+5. <article>     - Represents self-contained content.
+6. <aside>       - Defines content aside from the main content (e.g., sidebars).
+7. <footer>      - Defines footer for a document or section.
+8. <figure>      - Groups media content with a caption.
+9. <figcaption>  - Caption for a <figure>.
+10. <address>    - Provides contact information.
+11. <time>       - Represents a specific time or date.
+12. <mark>       - Highlights text for reference or relevance.
+13. <summary>    - Summary, visible when <details> is collapsed.
+14. <details>    - Specifies additional details the user can view or hide.
+
+Usage Note: These elements improve accessibility and SEO by giving structure to web documents.
+
+
+
+HTML5 Semantic Elements Reference with Usage Examples
+
+1. `<header>`
+
+Used for introductory content like logo, nav bar, etc.
+
+```html
+<header>
+  <h1>My Blog</h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+```
+
+---
+
+ 2. **`<nav>`**
+
+Wraps navigational links.
+
+```html
+<nav>
+  <ul>
+    <li><a href="/services">Services</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+</nav>
+```
+
+---
+
+3. **`<main>`**
+
+Contains the main content of a document (only one per page).
+
+```html
+<main>
+  <article>
+    <h2>Post Title</h2>
+    <p>Blog post content goes here...</p>
+  </article>
+</main>
+```
+
+---
+
+4. **`<section>`**
+
+Groups related content thematically.
+
+```html
+<section>
+  <h2>Our Services</h2>
+  <p>We offer web design, SEO, and more...</p>
+</section>
+```
+
+---
+
+5. **`<article>`**
+
+Encapsulates independent, reusable content like blog posts.
+
+```html
+<article>
+  <h2>Understanding Flexbox</h2>
+  <p>Flexbox is a layout model in CSS...</p>
+</article>
+```
+
+---
+
+6. **`<aside>`**
+
+Sidebar or tangential content.
+
+```html
+<aside>
+  <h3>Related Articles</h3>
+  <ul>
+    <li><a href="#">Intro to CSS Grid</a></li>
+    <li><a href="#">HTML5 Basics</a></li>
+  </ul>
+</aside>
+```
+
+---
+
+7. **`<footer>`**
+
+Footer content (e.g., copyright).
+
+```html
+<footer>
+  <p>&copy; 2025 My Blog. All rights reserved.</p>
+</footer>
+```
+
+---
+
+8. **`<figure>` & `<figcaption>`**
+
+For images, diagrams, etc., with a caption.
+
+```html
+<figure>
+  <img src="team.jpg" alt="Our Team">
+  <figcaption>The amazing team behind our success.</figcaption>
+</figure>
+```
+
+---
+
+9. **`<address>`**
+
+Contact or authorship information.
+
+```html
+<address>
+  Contact us at <a href="mailto:info@example.com">info@example.com</a>
+</address>
+```
+
+---
+
+10. **`<time>`**
+
+Date or time info for events or schedules.
+
+```html
+<time datetime="2025-05-07">May 7, 2025</time>
+```
+
+---
+
+11. **`<mark>`**
+
+Highlights relevant text.
+
+```html
+<p>Don't forget to <mark>submit your application</mark> before the deadline.</p>
+```
+
+---
+
+12. **`<details>` and `<summary>`**
+
+Expandable section.
+
+```html
+<details>
+  <summary>Read more about our policy</summary>
+  <p>Our return policy allows returns within 30 days...</p>
+</details>
+
+
+

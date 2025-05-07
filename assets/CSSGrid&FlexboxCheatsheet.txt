@@ -1,0 +1,150 @@
+CSS Grid & Flexbox Cheatsheet (.txt)
+
+```
+CSS Grid & Flexbox Cheatsheet
+-----------------------------
+
+FLEXBOX (One-dimensional layout: row OR column)
+------------------------------------------------
+1. Container Properties:
+   display: flex;
+   flex-direction: row | column | row-reverse | column-reverse;
+   justify-content: flex-start | center | space-between | space-around | space-evenly;
+   align-items: stretch | flex-start | center | flex-end | baseline;
+   align-content: stretch | center | space-between | space-around;
+
+2. Item Properties:
+   flex-grow: 0 | 1 | 2;
+   flex-shrink: 0 | 1;
+   flex-basis: auto | 50% | 100px;
+   flex: [grow] [shrink] [basis]; (e.g., flex: 1 1 200px;)
+   align-self: auto | flex-start | center | flex-end;
+
+GRID (Two-dimensional layout: rows AND columns)
+-----------------------------------------------
+1. Container Properties:
+   display: grid;
+   grid-template-columns: 100px 100px | repeat(3, 1fr);
+   grid-template-rows: auto | 200px 1fr;
+   grid-gap: 10px | row-gap / column-gap;
+   justify-items: start | center | end | stretch;
+   align-items: start | center | end | stretch;
+
+2. Item Properties:
+   grid-column: 1 / 3;
+   grid-row: 2 / 4;
+   grid-area: name;
+   justify-self: auto | start | center | end | stretch;
+   align-self: auto | start | center | end | stretch;
+
+Tips:
+- Use Flexbox for 1D alignment (e.g., navbar, list).
+- Use Grid for complex 2D layouts (e.g., full pages, dashboards).
+```
+
+---
+
+## 📘 **CSS Grid & Flexbox Reference with Usage Examples**
+
+### 🔶 **Flexbox Basics**
+
+#### 📦 Flex Container
+
+```css
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+```
+
+#### 📦 Flex Items
+
+```css
+.item {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 200px;
+  align-self: flex-end;
+}
+```
+
+---
+
+### 🔷 **Grid Basics**
+
+#### 🧱 Grid Container
+
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 100px auto;
+  gap: 10px;
+  justify-items: center;
+  align-items: stretch;
+}
+```
+
+#### 🧱 Grid Items
+
+```css
+.grid-item {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+  align-self: center;
+}
+```
+
+---
+
+### ⚖️ **Flexbox Use Case: Horizontal Nav**
+
+```html
+<nav class="navbar">
+  <a>Home</a>
+  <a>Services</a>
+  <a>Contact</a>
+</nav>
+
+<style>
+.navbar {
+  display: flex;
+  justify-content: space-around;
+}
+</style>
+```
+
+---
+
+### 🧭 **Grid Use Case: Dashboard Layout**
+
+```html
+<div class="dashboard">
+  <div class="sidebar">Sidebar</div>
+  <div class="main">Main</div>
+  <div class="footer">Footer</div>
+</div>
+
+<style>
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: auto 50px;
+  gap: 10px;
+}
+.sidebar {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+.main {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+.footer {
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+}
+</style>
+

@@ -1,0 +1,163 @@
+Git Branching Strategies Cheatsheet (.txt)
+```
+Git Branching Strategies Cheatsheet
+-----------------------------------
+
+1. Git Flow (Feature-driven workflow)
+   - Main Branches: main, develop
+   - Supporting: feature/*, release/*, hotfix/*
+   - Suitable for: Complex projects, long-term maintenance
+
+2. GitHub Flow (Continuous deployment)
+   - Main Branch: main
+   - Branches: feature branches off main
+   - PR-based, CI-integrated
+   - Suitable for: Web apps, SaaS, continuous delivery
+
+3. GitLab Flow (Hybrid model)
+   - Combines Git Flow + GitHub Flow
+   - Uses environments: pre-prod, staging, production
+   - Suitable for: Teams deploying to environments
+
+4. Trunk-Based Development
+   - Only main/trunk + short-lived branches
+   - Frequent small merges
+   - Suitable for: Fast-moving teams, microservices
+
+5. One-Flow
+   - Single development branch (main or master)
+   - No "develop" branch
+   - Simple release tags and hotfixes
+   - Suitable for: Small teams, fast releases
+
+Tips:
+-----
+- Use short-lived branches to avoid conflicts.
+- Protect main branches via pull requests and reviews.
+- Match strategy to team size, release frequency, and deployment complexity.
+```
+
+---
+
+## 📘 **Git Branching Strategies Reference with Usage Examples**
+
+---
+
+### 1. 🔁 **Git Flow**
+
+**Ideal for**: Large teams, versioned releases, staged testing
+
+```bash
+# Initialize Git Flow
+git flow init
+
+# Start a feature
+git flow feature start login-form
+
+# Finish a feature
+git flow feature finish login-form
+
+# Start a release
+git flow release start v1.2.0
+
+# Finish and deploy release
+git flow release finish v1.2.0
+```
+
+**Main branches**:
+
+* `main` → production-ready
+* `develop` → integration branch
+
+**Feature branches**: `feature/*`
+**Release branches**: `release/*`
+**Hotfix branches**: `hotfix/*`
+
+---
+
+### 2. 🚀 **GitHub Flow**
+
+**Ideal for**: Continuous delivery environments
+
+```bash
+# Create a feature branch
+git checkout -b fix/login-error
+
+# Push and create PR
+git push origin fix/login-error
+
+# Merge via Pull Request to main
+```
+
+**Main rules**:
+
+* Always branch from `main`
+* Open a Pull Request
+* Review + CI required
+* Deploy after merge
+
+---
+
+### 3. 🔀 **GitLab Flow**
+
+**Ideal for**: Teams managing multiple deployment environments
+
+**Example**:
+
+* `main` → stable
+* `pre-prod` → test builds
+* `production` → live code
+* Feature branches → merge to pre-prod → then merge to main
+
+Supports issue tracking and merge requests tied to CI/CD pipelines.
+
+---
+
+### 4. 🌱 **Trunk-Based Development**
+
+**Ideal for**: High-speed dev teams, CI/CD pipelines
+
+```bash
+# Short-lived branch
+git checkout -b quick-fix
+# Work fast and merge quickly
+git commit -m "Fix bug"
+git checkout main
+git merge quick-fix
+```
+
+**Key ideas**:
+
+* One main branch (`main` or `trunk`)
+* All devs merge to trunk multiple times daily
+* Feature toggles preferred over long-lived branches
+
+---
+
+### 5. 🔄 **One-Flow**
+
+**Ideal for**: Simplicity-first teams or solo developers
+
+* Only use `main`
+* Use tags for releases
+* Hotfixes go directly to `main`
+
+```bash
+# Work directly on main
+git commit -m "Add dashboard"
+git tag v1.3.0
+git push origin --tags
+```
+
+---
+
+### ✅ Summary: Choosing a Strategy
+
+| Strategy    | Best For                    | Main Branches      |
+| ----------- | --------------------------- | ------------------ |
+| Git Flow    | Versioned, staged projects  | `main`, `develop`  |
+| GitHub Flow | CI/CD + fast releases       | `main`             |
+| GitLab Flow | Multi-env, staged pipelines | `main`, `staging`  |
+| Trunk-Based | Agile, microservices        | `main` only        |
+| One-Flow    | Simplicity, solo or small   | `main` + tags only |
+

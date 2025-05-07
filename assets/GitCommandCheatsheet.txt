@@ -1,0 +1,158 @@
+Git Command Cheatsheet (.txt)**
+
+```
+Git Command Cheatsheet
+-----------------------
+
+SETUP
+------
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+REPOSITORY
+----------
+git init                       # Initialize a new Git repository
+git clone [url]               # Clone a repo
+
+STAGING & COMMITS
+-----------------
+git status                    # Show current status
+git add [file]                # Stage a file
+git add .                     # Stage all changes
+git commit -m "Message"       # Commit staged changes
+git commit -am "Message"      # Add & commit tracked files
+
+BRANCHING
+---------
+git branch                    # List branches
+git branch [name]            # Create a new branch
+git checkout [name]          # Switch to branch
+git checkout -b [name]       # Create and switch
+git merge [branch]           # Merge into current branch
+git branch -d [name]         # Delete branch
+
+REMOTE
+------
+git remote add origin [url]  # Add remote
+git remote -v                # View remotes
+git push origin [branch]     # Push to remote
+git pull origin [branch]     # Pull latest
+git fetch                    # Fetch changes without merging
+
+LOGS & HISTORY
+--------------
+git log                      # View commit history
+git log --oneline            # Compact view
+git show [commit]            # Show specific commit
+
+UNDO & FIXES
+------------
+git reset --soft HEAD~1      # Undo last commit, keep changes staged
+git reset --hard HEAD~1      # Undo last commit, discard changes
+git checkout -- [file]       # Discard local changes in file
+git revert [commit]          # Revert a commit
+
+STASH
+-----
+git stash                    # Save uncommitted changes
+git stash pop                # Reapply last stash
+git stash list               # List stashed changes
+
+TAGS
+----
+git tag                      # List tags
+git tag [tagname]            # Create tag
+git push origin [tagname]    # Push tag
+
+Help:
+-----
+git help [command]           # Show help for command
+```
+
+---
+
+## 📘 **Git Command Reference with Usage Examples**
+
+### 🔧 Setup Git
+
+```bash
+git config --global user.name "Alice Doe"
+git config --global user.email "alice@example.com"
+```
+
+---
+
+### 📁 Initialize & Clone Repositories
+
+```bash
+git init              # Starts a new repo in current folder
+git clone https://github.com/user/repo.git
+```
+
+---
+
+### 📝 Track and Commit Changes
+
+```bash
+git status            # See what's changed
+git add .             # Stage all changes
+git commit -m "Initial commit"
+```
+
+---
+
+### 🌿 Branching & Merging
+
+```bash
+git branch feature/login
+git checkout feature/login
+# OR
+git checkout -b feature/login
+git merge main        # Merge 'main' into current branch
+```
+
+---
+
+### 🌍 Remote Operations
+
+```bash
+git remote add origin https://github.com/user/repo.git
+git push origin main
+git pull origin main
+```
+
+---
+
+### 🕒 View History
+
+```bash
+git log
+git log --oneline --graph --all
+```
+
+---
+
+### 🧹 Undo Changes
+
+```bash
+git reset --soft HEAD~1      # Undo last commit, keep changes
+git checkout -- styles.css   # Discard changes in file
+```
+
+---
+
+### 📦 Stashing
+
+```bash
+git stash            # Save your work temporarily
+git stash pop        # Reapply it
+```
+
+---
+
+### 🏷 Tags
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+

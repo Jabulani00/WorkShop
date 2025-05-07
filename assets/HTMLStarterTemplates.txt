@@ -1,0 +1,156 @@
+<!-- HTML Starter Templates Cheatsheet -->
+
+<!-- 1. Basic HTML5 Template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic HTML5 Template</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html>
+
+<!-- 2. HTML Template with External CSS and JS -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML with CSS and JS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Styled Page</h1>
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!-- 3. Responsive HTML Template using Bootstrap -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Starter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Welcome to Bootstrap</h1>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<!-- 4. Minimal Portfolio Template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Your Name</h1>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <section id="about"><h2>About Me</h2></section>
+        <section id="projects"><h2>Projects</h2></section>
+        <section id="contact"><h2>Contact</h2></section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Your Name</p>
+    </footer>
+</body>
+</html>
+
+<!-- 5. HTML Landing Page Template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #f4f4f4; }
+        .hero h1 { font-size: 3rem; }
+        .hero p { font-size: 1.2rem; }
+        .hero button { padding: 10px 20px; font-size: 1rem; }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>Welcome to Our Site</h1>
+        <p>Discover more about our amazing product</p>
+        <button>Get Started</button>
+    </section>
+</body>
+</html>
+
+<!-- 6. HTML Template with Flexbox Layout -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Layout</title>
+    <style>
+        body { margin: 0; display: flex; height: 100vh; }
+        nav { width: 200px; background: #333; color: #fff; padding: 1rem; }
+        main { flex: 1; padding: 1rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <h2>Menu</h2>
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact</li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Main Content</h1>
+        <p>This layout uses Flexbox for simple page structure.</p>
+    </main>
+</body>
+</html>
+
+<!-- 7. Admin Dashboard Starter Template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <h1 class="mt-4">Dashboard</h1>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

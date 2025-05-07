@@ -1,0 +1,85 @@
+# CSS Frameworks Comparison Cheatsheet (For Beginners)
+
+## 1. Bootstrap
+
+* **Website**: [https://getbootstrap.com](https://getbootstrap.com)
+* **Setup**: CDN or NPM
+* **Grid System**: 12-column flexbox-based grid
+* **Components**: Extensive pre-built components (modals, navbars, forms, etc.)
+* **Customizability**: High (via SASS)
+* **Best For**: Quick prototyping, responsive websites
+* **Learning Curve**: Easy
+* **Size**: \~200KB (minified CSS & JS)
+
+## 2. Tailwind CSS
+
+* **Website**: [https://tailwindcss.com](https://tailwindcss.com)
+* **Setup**: PostCSS + NPM or CDN via Tailwind Play
+* **Grid System**: Utility-first approach using Flexbox and Grid
+* **Components**: Minimal; relies on community libraries or custom
+* **Customizability**: Very high (configurable via tailwind.config.js)
+* **Best For**: Custom designs, design systems, modern UIs
+* **Learning Curve**: Medium
+* **Size**: Depends on config, \~10KB with purging
+
+## 3. Bulma
+
+* **Website**: [https://bulma.io](https://bulma.io)
+* **Setup**: CDN or NPM
+* **Grid System**: Flexbox-based
+* **Components**: Decent number of UI components
+* **Customizability**: Good (SASS)
+* **Best For**: Clean and simple interfaces
+* **Learning Curve**: Easy
+* **Size**: \~150KB
+
+## 4. Foundation (by Zurb)
+
+* **Website**: [https://get.foundation](https://get.foundation)
+* **Setup**: CDN or NPM
+* **Grid System**: Flexbox and Grid support
+* **Components**: Advanced components (e.g., responsive tables, accessibility helpers)
+* **Customizability**: High (SASS-based)
+* **Best For**: Enterprise-level apps, accessibility
+* **Learning Curve**: Medium to High
+* **Size**: \~300KB
+
+## 5. Materialize CSS
+
+* **Website**: [https://materializecss.com](https://materializecss.com)
+* **Setup**: CDN or NPM
+* **Grid System**: 12-column grid
+* **Components**: Material Design UI components
+* **Customizability**: Moderate
+* **Best For**: Material Design style websites
+* **Learning Curve**: Easy to Medium
+* **Size**: \~200KB
+
+## 6. UIkit
+
+* **Website**: [https://getuikit.com](https://getuikit.com)
+* **Setup**: CDN or NPM
+* **Grid System**: Flexbox-based grid
+* **Components**: Lightweight and fast UI components
+* **Customizability**: Good
+* **Best For**: Lightweight, fast-loading UIs
+* **Learning Curve**: Medium
+* **Size**: \~150KB
+
+---
+
+## Quick Comparison Table
+
+| Framework    | Style Approach   | Grid System | Components  | Customizable | Size    | Best For                    |
+| ------------ | ---------------- | ----------- | ----------- | ------------ | ------- | --------------------------- |
+| Bootstrap    | Component-based  | Flexbox     | Yes         | High         | \~200KB | General web development     |
+| Tailwind CSS | Utility-first    | Flex/Grid   | Minimal     | Very High    | \~10KB  | Custom designs              |
+| Bulma        | Semantic classes | Flexbox     | Moderate    | Good         | \~150KB | Clean UIs                   |
+| Foundation   | Component-based  | Flex/Grid   | Advanced    | High         | \~300KB | Enterprise, accessibility   |
+| Materialize  | Material Design  | Flexbox     | Yes         | Moderate     | \~200KB | Google Material Design look |
+| UIkit        | Modular utility  | Flexbox     | Lightweight | Good         | \~150KB | Fast and modular UI designs |
+
+
+
+
+
