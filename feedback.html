@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop Feedback Form</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/feedback-styles.css">
+
+    <link rel="stylesheet" href="css/nav.css">
+    <style>
+    /* Inline navigation CSS to ensure it works */
+    :root {
+        --burnt-orange: #CC5500;
+        --burnt-orange-dark: #A74200;
+        --burnt-orange-light: #FF8033;
+        --accent-color: #FFB347;
+        --dark-gray: #333333;
+        --light-gray: #f8f9fa;
+    }
+
+    /* Floating Hamburger Button */
+    .floating-menu-container {
+        position: fixed;
+        z-index: 1000;
+    }
+
+    .floating-hamburger {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--burnt-orange);
+        border: none;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1002;
+        transition: all 0.3s ease;
+    }
+
+    .floating-hamburger:hover {
+        background: var(--burnt-orange-dark);
+        transform: scale(1.05);
+    }
+
+    .floating-hamburger span {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: white;
+        margin: 2px 0;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    .floating-hamburger.active {
+        background: var(--burnt-orange-dark);
+    }
+
+    .floating-hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(4px, 5px);
+    }
+
+    .floating-hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .floating-hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(4px, -5px);
+    }
+
+    /* Slide-out Menu */
+    .slide-menu {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 280px;
+        height: 100vh;
+        background: linear-gradient(140deg, var(--burnt-orange), var(--burnt-orange-dark));
+        z-index: 1001;
+        transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        padding: 80px 25px 30px;
+        overflow-y: auto;
+    }
+
+    .slide-menu.active {
+        right: 0;
+    }
+
+    /* Menu Overlay */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Workshop Info */
+    .workshop-info {
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 20px;
+    }
+
+    .workshop-info h2 {
+        color: white;
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .workshop-info p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+    }
+
+    /* Menu Items */
+    .menu-items {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .menu-items li {
+        margin: 12px 0;
+    }
+
+    .menu-link {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        display: block;
+        padding: 10px 15px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .menu-link:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 3px;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+    }
+
+    .menu-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-link:hover:before {
+        width: 100%;
+    }
+
+    .menu-link.active {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .menu-link.active:before {
+        width: 100%;
+    }
+    </style>
+    <!-- Firebase SDKs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+      <!-- Floating Menu - Directly embedded instead of using fetch -->
+      <div class="floating-menu-container">
+        <button class="floating-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <nav class="slide-menu">
+            <div class="workshop-info">
+                <h2>Portfolio Setup, Hosting & GitHub Essentials</h2>
+                <p>Friday 09 May 2025 • 09:00 - 12:00</p>
+            </div>
+            <ul class="menu-items">
+                <li><a href="index.html" class="menu-link">Overview</a></li>
+                <li><a href="programme.html" class="menu-link">Programme</a></li>
+                <li><a href="materails.html" class="menu-link">Materials</a></li>
+                <li><a href="feedback.html" class="menu-link">Feedback</a></li>
+            </ul>
+        </nav>
+        
+        <div class="menu-overlay"></div>
+    </div>
+    <div class="container my-4">
+        <div class="card form-card">
+            <div class="card-header text-center">
+                <h3><i class="bi bi-clipboard-check"></i> Workshop Feedback</h3>
+                <p class="mb-0">Portfolio Setup, Hosting & GitHub Essentials</p>
+            </div>
+            <div class="card-body">
+                <form id="feedback-form">
+                    <!-- Personal Information -->
+                    <div class="row mb-3">
+                        <div class="col-md-4 mb-3">
+                            <label for="studentType" class="form-label">Student Type*</label>
+                            <select class="form-select" id="studentType" required>
+                                <option value="" selected disabled>Select...</option>
+                                <option value="ECP">ECP</option>
+                                <option value="1st Year">1st Year</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="surname" class="form-label">Surname*</label>
+                            <input type="text" class="form-control" id="surname" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="initials" class="form-label">Initials*</label>
+                            <input type="text" class="form-control" id="initials" maxlength="5" required>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Workshop Content Satisfaction - ENHANCED WITH MORE RADIO QUESTIONS -->
+                    <h5>Workshop Content Evaluation</h5>
+                    <div class="mb-3">
+                        <label class="form-label">The workshop content was relevant to my studies*</label>
+                        <div class="rating-buttons">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="contentRelevant" id="contentRelevant1" value="Strongly Disagree" required>
+                                <label class="form-check-label" for="contentRelevant1">Strongly Disagree</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="contentRelevant" id="contentRelevant2" value="Disagree">
+                                <label class="form-check-label" for="contentRelevant2">Disagree</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="contentRelevant" id="contentRelevant3" value="Neutral">
+                                <label class="form-check-label" for="contentRelevant3">Neutral</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="contentRelevant" id="contentRelevant4" value="Agree">
+                                <label class="form-check-label" for="contentRelevant4">Agree</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="contentRelevant" id="contentRelevant5" value="Strongly Agree">
+                                <label class="form-check-label" for="contentRelevant5">Strongly Agree</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ADDED: More Radio Questions -->
+                    <div class="mb-3">
+                        <label class="form-label">The pace of the workshop was appropriate*</label>
+                        <div class="rating-buttons">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="workshopPace" id="workshopPace1" value="Too Slow" required>
+                                <label class="form-check-label" for="workshopPace1">Too Slow</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="workshopPace" id="workshopPace2" value="Slightly Slow">
+                                <label class="form-check-label" for="workshopPace2">Slightly Slow</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="workshopPace" id="workshopPace3" value="Just Right">
+                                <label class="form-check-label" for="workshopPace3">Just Right</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="workshopPace" id="workshopPace4" value="Slightly Fast">
+                                <label class="form-check-label" for="workshopPace4">Slightly Fast</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="workshopPace" id="workshopPace5" value="Too Fast">
+                                <label class="form-check-label" for="workshopPace5">Too Fast</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">The difficulty level of the workshop was*</label>
+                        <div class="rating-buttons">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="difficultyLevel" id="difficultyLevel1" value="Too Easy" required>
+                                <label class="form-check-label" for="difficultyLevel1">Too Easy</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="difficultyLevel" id="difficultyLevel2" value="Easy">
+                                <label class="form-check-label" for="difficultyLevel2">Easy</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="difficultyLevel" id="difficultyLevel3" value="Just Right">
+                                <label class="form-check-label" for="difficultyLevel3">Just Right</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="difficultyLevel" id="difficultyLevel4" value="Challenging">
+                                <label class="form-check-label" for="difficultyLevel4">Challenging</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="difficultyLevel" id="difficultyLevel5" value="Too Difficult">
+                                <label class="form-check-label" for="difficultyLevel5">Too Difficult</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">How likely are you to recommend this workshop to other students?*</label>
+                        <div class="rating-buttons">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="recommendLikelihood" id="recommendLikelihood1" value="Not Likely" required>
+                                <label class="form-check-label" for="recommendLikelihood1">Not Likely</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="recommendLikelihood" id="recommendLikelihood2" value="Somewhat Unlikely">
+                                <label class="form-check-label" for="recommendLikelihood2">Somewhat Unlikely</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="recommendLikelihood" id="recommendLikelihood3" value="Neutral">
+                                <label class="form-check-label" for="recommendLikelihood3">Neutral</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="recommendLikelihood" id="recommendLikelihood4" value="Somewhat Likely">
+                                <label class="form-check-label" for="recommendLikelihood4">Somewhat Likely</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="recommendLikelihood" id="recommendLikelihood5" value="Very Likely">
+                                <label class="form-check-label" for="recommendLikelihood5">Very Likely</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Understanding of Topics -->
+                    <h5>Understanding of Topics</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Topic</th>
+                                    <th>Poor</th>
+                                    <th>Fair</th>
+                                    <th>Good</th>
+                                    <th>Excellent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Git Basics</td>
+                                    <td><input class="form-check-input" type="radio" name="gitBasics" value="Poor" required></td>
+                                    <td><input class="form-check-input" type="radio" name="gitBasics" value="Fair"></td>
+                                    <td><input class="form-check-input" type="radio" name="gitBasics" value="Good"></td>
+                                    <td><input class="form-check-input" type="radio" name="gitBasics" value="Excellent"></td>
+                                </tr>
+                                <tr>
+                                    <td>GitHub Collaboration</td>
+                                    <td><input class="form-check-input" type="radio" name="githubCollab" value="Poor" required></td>
+                                    <td><input class="form-check-input" type="radio" name="githubCollab" value="Fair"></td>
+                                    <td><input class="form-check-input" type="radio" name="githubCollab" value="Good"></td>
+                                    <td><input class="form-check-input" type="radio" name="githubCollab" value="Excellent"></td>
+                                </tr>
+                                <tr>
+                                    <td>Portfolio Development</td>
+                                    <td><input class="form-check-input" type="radio" name="portfolioDev" value="Poor" required></td>
+                                    <td><input class="form-check-input" type="radio" name="portfolioDev" value="Fair"></td>
+                                    <td><input class="form-check-input" type="radio" name="portfolioDev" value="Good"></td>
+                                    <td><input class="form-check-input" type="radio" name="portfolioDev" value="Excellent"></td>
+                                </tr>
+                                <tr>
+                                    <td>Website Hosting</td>
+                                    <td><input class="form-check-input" type="radio" name="webHosting" value="Poor" required></td>
+                                    <td><input class="form-check-input" type="radio" name="webHosting" value="Fair"></td>
+                                    <td><input class="form-check-input" type="radio" name="webHosting" value="Good"></td>
+                                    <td><input class="form-check-input" type="radio" name="webHosting" value="Excellent"></td>
+                                </tr>
+                                <!-- ADDED: More Topic Understanding Rows -->
+                                <tr>
+                                    <td>HTML/CSS Basics</td>
+                                    <td><input class="form-check-input" type="radio" name="htmlCssBasics" value="Poor" required></td>
+                                    <td><input class="form-check-input" type="radio" name="htmlCssBasics" value="Fair"></td>
+                                    <td><input class="form-check-input" type="radio" name="htmlCssBasics" value="Good"></td>
+                                    <td><input class="form-check-input" type="radio" name="htmlCssBasics" value="Excellent"></td>
+                                </tr>
+                                <tr>
+                                    <td>GitHub Pages Deployment</td>
+                                    <td><input class="form-check-input" type="radio" name="githubPages" value="Poor" required></td>
+                                    <td><input class="form-check-input" type="radio" name="githubPages" value="Fair"></td>
+                                    <td><input class="form-check-input" type="radio" name="githubPages" value="Good"></td>
+                                    <td><input class="form-check-input" type="radio" name="githubPages" value="Excellent"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- True/False Questions - ENHANCED WITH MORE QUESTIONS -->
+                    <h5>Workshop Experience</h5>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="enoughTime">
+                            <label class="form-check-label" for="enoughTime">
+                                There was enough time to complete the activities
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="materialsClear">
+                            <label class="form-check-label" for="materialsClear">
+                                Workshop materials were clear and helpful
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="mentorsHelpful">
+                            <label class="form-check-label" for="mentorsHelpful">
+                                Mentors were knowledgeable and helpful
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="willApply">
+                            <label class="form-check-label" for="willApply">
+                                I will apply what I learned in my studies/projects
+                            </label>
+                        </div>
+                        <!-- ADDED: More True/False Questions -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="adequateEquipment">
+                            <label class="form-check-label" for="adequateEquipment">
+                                Equipment and facilities were adequate for the workshop
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="practicalHandsOn">
+                            <label class="form-check-label" for="practicalHandsOn">
+                                The hands-on activities helped me understand the concepts better
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="teamworkEffective">
+                            <label class="form-check-label" for="teamworkEffective">
+                                Working in teams was effective for learning the material
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="confidentWithGit">
+                            <label class="form-check-label" for="confidentWithGit">
+                                I now feel confident using Git for version control
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="confidentWithGitHub">
+                            <label class="form-check-label" for="confidentWithGitHub">
+                                I understand how to use GitHub for collaboration
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="portfolioStarted">
+                            <label class="form-check-label" for="portfolioStarted">
+                                I successfully started my portfolio website during the workshop
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- ADDED: Workshop Outcomes Section -->
+                    <h5>Workshop Outcomes</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Which of the following did you successfully accomplish?*</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="workshopOutcome" id="outcomeComplete" value="CompletePortfolio" required>
+                            <label class="form-check-label" for="outcomeComplete">
+                                Completed and deployed a portfolio website
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="workshopOutcome" id="outcomePartial" value="PartialPortfolio">
+                            <label class="form-check-label" for="outcomePartial">
+                                Created a portfolio but didn't complete deployment
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="workshopOutcome" id="outcomeGitHub" value="GitHubOnly">
+                            <label class="form-check-label" for="outcomeGitHub">
+                                Set up Git/GitHub but didn't complete the portfolio
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="workshopOutcome" id="outcomeNone" value="NoCompletion">
+                            <label class="form-check-label" for="outcomeNone">
+                                Had difficulties and couldn't complete the activities
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Future Workshops -->
+                    <h5>Future Workshops</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Which additional topics would you like to see in future workshops?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="advancedGit">
+                            <label class="form-check-label" for="advancedGit">Advanced Git techniques</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="advancedWeb">
+                            <label class="form-check-label" for="advancedWeb">Advanced web development</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="javascript">
+                            <label class="form-check-label" for="javascript">JavaScript and frameworks</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="database">
+                            <label class="form-check-label" for="database">Database integration</label>
+                        </div>
+                        <!-- ADDED: More Topic Options -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="mobileResponsive">
+                            <label class="form-check-label" for="mobileResponsive">Mobile-responsive design</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="uiUxDesign">
+                            <label class="form-check-label" for="uiUxDesign">UI/UX design principles</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="apiIntegration">
+                            <label class="form-check-label" for="apiIntegration">API integration</label>
+                        </div>
+                    </div>
+
+                    <!-- ADDED: Workshop Format Preference -->
+                    <h5>Workshop Format Preference</h5>
+                    <div class="mb-3">
+                        <label class="form-label">For future workshops, which format do you prefer?*</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="formatPreference" id="formatInPerson" value="InPerson" required>
+                            <label class="form-check-label" for="formatInPerson">
+                                In-person only
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="formatPreference" id="formatOnline" value="Online">
+                            <label class="form-check-label" for="formatOnline">
+                                Online only
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="formatPreference" id="formatHybrid" value="Hybrid">
+                            <label class="form-check-label" for="formatHybrid">
+                                Hybrid (both in-person and online options)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="formatPreference" id="formatSelfPaced" value="SelfPaced">
+                            <label class="form-check-label" for="formatSelfPaced">
+                                Self-paced with optional mentor sessions
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Optional Comments -->
+                    <div class="mb-3">
+                        <label for="comments" class="form-label">Additional comments or suggestions (optional)</label>
+                        <textarea class="form-control" id="comments" rows="3" placeholder="Your feedback helps us improve future workshops..."></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-submit">Submit Feedback</button>
+                    </div>
+                </form>
+
+                <!-- Success message (hidden by default) -->
+                <div id="success-message" class="alert alert-success mt-3" style="display: none;">
+                    <i class="bi bi-check-circle-fill"></i> Thank you for your feedback! Your responses have been recorded.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="feedback-script.js"></script>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Hamburger menu script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const hamburger = document.querySelector('.floating-hamburger');
+            const slideMenu = document.querySelector('.slide-menu');
+            const overlay = document.querySelector('.menu-overlay');
+            const menuLinks = document.querySelectorAll('.menu-link');
+            
+            // Toggle menu function
+            function toggleMenu() {
+                hamburger.classList.toggle('active');
+                slideMenu.classList.toggle('active');
+                overlay.classList.toggle('active');
+                
+                // Prevent body scrolling when menu is open
+                if (slideMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+            
+            // Event Listeners
+            hamburger.addEventListener('click', toggleMenu);
+            
+            // Close menu when clicking on overlay
+            overlay.addEventListener('click', toggleMenu);
+            
+            // Close menu when clicking a link
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    toggleMenu();
+                });
+            });
+            
+            // Close menu when pressing ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && slideMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+            
+            // Highlight active page
+            const currentPage = window.location.pathname.split("/").pop();
+            
+            menuLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                if (linkHref === currentPage || 
+                    (currentPage === '' && linkHref === 'index.html')) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Add subtle animation to hamburger on hover
+            hamburger.addEventListener('mouseenter', function() {
+                if (!hamburger.classList.contains('active')) {
+                    const spans = this.querySelectorAll('span');
+                    spans[0].style.width = '20px';
+                    spans[1].style.width = '15px';
+                    
+                    setTimeout(() => {
+                        spans[0].style.width = '25px';
+                        spans[1].style.width = '25px';
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

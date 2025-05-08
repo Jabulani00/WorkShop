@@ -1,0 +1,153 @@
+/* Feedback Form Styles */
+
+/* Import Bootstrap Icons */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css");
+
+/* Color Variables */
+:root {
+    --burnt-orange: #CC5500;
+    --burnt-orange-dark: #A74200;
+    --burnt-orange-light: #FF8033;
+    --accent-color: #FFB347;
+    --dark-gray: #333333;
+    --light-gray: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+}
+
+.form-card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--burnt-orange), var(--burnt-orange-dark));
+    color: white;
+    padding: 1.25rem;
+    border-bottom: 3px solid var(--accent-color);
+}
+
+.card-header h3 {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 1.5rem;
+    
+}
+
+/* Form Section Styling */
+h5 {
+    color: var(--burnt-orange);
+    border-bottom: 2px solid var(--burnt-orange-light);
+    padding-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--dark-gray);
+}
+
+.form-select, .form-control {
+    border-color: #dee2e6;
+    padding: 0.5rem 0.75rem;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: var(--burnt-orange-light);
+    box-shadow: 0 0 0 0.25rem rgba(204, 85, 0, 0.25);
+}
+
+/* Rating Buttons */
+.rating-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--burnt-orange);
+    border-color: var(--burnt-orange);
+}
+
+/* Table Styles */
+.table {
+    margin-bottom: 1.5rem;
+}
+
+.table thead th {
+    background-color: rgba(204, 85, 0, 0.1);
+    color: var(--burnt-orange-dark);
+    font-weight: 600;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table tbody td:first-child {
+    text-align: left;
+    font-weight: 500;
+}
+
+/* Submit Button */
+.btn-submit {
+    background-color: var(--burnt-orange);
+    color: white;
+    padding: 0.5rem 2rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: var(--burnt-orange-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* Success Message */
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-success i {
+    margin-right: 0.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .form-check-inline {
+        margin-right: 0;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    
+    .table thead th, .table tbody td {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.25rem;
+    }
+}

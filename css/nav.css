@@ -1,0 +1,173 @@
+/* nav.css - Floating Hamburger Menu Styling */
+:root {
+    --burnt-orange: #CC5500;
+    --burnt-orange-dark: #A74200;
+    --burnt-orange-light: #FF8033;
+    --accent-color: #FFB347;
+    --dark-gray: #333333;
+    --light-gray: #f8f9fa;
+}
+
+/* Floating Hamburger Button */
+.floating-menu-container {
+    position: fixed;
+    z-index: 1000;
+}
+
+.floating-hamburger {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--burnt-orange);
+    border: none;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1002;
+    transition: all 0.3s ease;
+}
+
+.floating-hamburger:hover {
+    background: var(--burnt-orange-dark);
+    transform: scale(1.05);
+}
+
+.floating-hamburger span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: white;
+    margin: 2px 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.floating-hamburger.active {
+    background: var(--burnt-orange-dark);
+}
+
+.floating-hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(4px, 5px);
+}
+
+.floating-hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.floating-hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(4px, -5px);
+}
+
+/* Slide-out Menu */
+.slide-menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(140deg, var(--burnt-orange), var(--burnt-orange-dark));
+    z-index: 1001;
+    transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    padding: 80px 25px 30px;
+    overflow-y: auto;
+}
+
+.slide-menu.active {
+    right: 0;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Workshop Info */
+.workshop-info {
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 20px;
+}
+
+.workshop-info h2 {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.workshop-info p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+/* Menu Items */
+.menu-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-items li {
+    margin: 12px 0;
+}
+
+.menu-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-link:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.menu-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-link:hover:before {
+    width: 100%;
+}
+
+.menu-link.active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.menu-link.active:before {
+    width: 100%;
+}
