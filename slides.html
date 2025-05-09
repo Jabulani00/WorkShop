@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Setup, Hosting & GitHub Essentials - Workshop Slides</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        .slide {
+            display: none;
+            padding: 40px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .slide.active {
+            display: block;
+        }
+        .slide-title {
+            margin-bottom: 30px;
+            color: #CC5500;
+        }
+        .slide-content {
+            font-size: 1.2rem;
+        }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .control-button {
+            background-color: #CC5500;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .slide-number {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: #666;
+        }
+        .importance-box {
+            background-color: #f8f9fa;
+            border-left: 5px solid #CC5500;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .importance-title {
+            color: #CC5500;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="css/nav.css">
+    <style>
+    /* Inline navigation CSS to ensure it works */
+    :root {
+        --burnt-orange: #CC5500;
+        --burnt-orange-dark: #A74200;
+        --burnt-orange-light: #FF8033;
+        --accent-color: #FFB347;
+        --dark-gray: #333333;
+        --light-gray: #f8f9fa;
+    }
+
+    /* Floating Hamburger Button */
+    .floating-menu-container {
+        position: fixed;
+        z-index: 1000;
+    }
+
+    .floating-hamburger {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--burnt-orange);
+        border: none;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1002;
+        transition: all 0.3s ease;
+    }
+
+    .floating-hamburger:hover {
+        background: var(--burnt-orange-dark);
+        transform: scale(1.05);
+    }
+
+    .floating-hamburger span {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: white;
+        margin: 2px 0;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    .floating-hamburger.active {
+        background: var(--burnt-orange-dark);
+    }
+
+    .floating-hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(4px, 5px);
+    }
+
+    .floating-hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .floating-hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(4px, -5px);
+    }
+
+    /* Slide-out Menu */
+    .slide-menu {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 280px;
+        height: 100vh;
+        background: linear-gradient(140deg, var(--burnt-orange), var(--burnt-orange-dark));
+        z-index: 1001;
+        transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        padding: 80px 25px 30px;
+        overflow-y: auto;
+    }
+
+    .slide-menu.active {
+        right: 0;
+    }
+
+    /* Menu Overlay */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Workshop Info */
+    .workshop-info {
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 20px;
+    }
+
+    .workshop-info h2 {
+        color: white;
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .workshop-info p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+    }
+
+    /* Menu Items */
+    .menu-items {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .menu-items li {
+        margin: 12px 0;
+    }
+
+    .menu-link {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        display: block;
+        padding: 10px 15px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .menu-link:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 3px;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+    }
+
+    .menu-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-link:hover:before {
+        width: 100%;
+    }
+
+    .menu-link.active {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .menu-link.active:before {
+        width: 100%;
+    }
+    </style>
+</head>
+<body>
+     <!-- Floating Menu - Directly embedded instead of using fetch -->
+     <div class="floating-menu-container">
+        <button class="floating-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <nav class="slide-menu">
+            <div class="workshop-info">
+                <h2>Portfolio Setup, Hosting & GitHub Essentials</h2>
+                <p>Friday 09 May 2025 • 09:00 - 12:00</p>
+            </div>
+            <ul class="menu-items">
+                <li><a href="index.html" class="menu-link">Overview</a></li>
+                <li><a href="programme.html" class="menu-link">Programme</a></li>
+                <li><a href="slides.html" class="menu-link">Slides</a></li>
+                <li><a href="materails.html" class="menu-link">Materials</a></li>
+                <li><a href="feedback.html" class="menu-link">Feedback</a></li>
+            </ul>
+        </nav>
+        
+        <div class="menu-overlay"></div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- Title Slide -->
+        <div class="slide active" id="slide1">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-md-10 text-center">
+                    <h1 class="display-3 fw-bold">Portfolio Setup, Hosting & GitHub Essentials</h1>
+                    <p class="lead">A hands-on workshop for ICT students</p>
+                    <p class="mt-4">
+                        <i class="bi bi-calendar-event me-2"></i>Friday, May 09, 2025<br>
+                        <i class="bi bi-clock me-2"></i>09:00 - 12:00 (3 hours)<br>
+                        <i class="bi bi-geo-alt me-2"></i>NS1 & R14/15
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workshop Overview -->
+        <div class="slide" id="slide2">
+            <h2 class="slide-title">Workshop Overview</h2>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4><i class="bi bi-people me-2"></i>Target Audience</h4>
+                        <p>First-Year and ECP students in ICT</p>
+                        
+                        <h4><i class="bi bi-laptop me-2"></i>Required</h4>
+                        <p>Laptop (if available)</p>
+                        
+                        <h4><i class="bi bi-info-circle me-2"></i>Note</h4>
+                        <p>Basic computer skills required. No prior Git knowledge needed.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4><i class="bi bi-clock-history me-2"></i>Schedule Overview</h4>
+                        <ul>
+                            <li>Introduction & Context (30 min)</li>
+                            <li>Git & GitHub Essentials (60 min)</li>
+                            <li>Portfolio Development (60 min)</li>
+                            <li>Hosting & Wrap-up (30 min)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Workshop Matters</h5>
+                    <p>This workshop bridges the gap between classroom theory and industry practice. You'll gain essential skills for showcasing your work professionally and collaborating effectively—two crucial abilities in today's tech industry that aren't typically covered in standard curriculum.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome & Introduction -->
+        <div class="slide" id="slide3">
+            <h2 class="slide-title">Welcome & Introduction (09:00 - 09:15)</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Welcome address and introduction of mentors</li>
+                    <li>Overview of workshop objectives and agenda</li>
+                    <li>Quick participant introductions (by table/group)</li>
+                    <li>Set up participant groups (3-4 students per group)</li>
+                </ul>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>Starting with a clear introduction helps you understand:</p>
+                    <ul>
+                        <li><strong>Learning objectives</strong> - What skills you'll gain by the end</li>
+                        <li><strong>Workshop structure</strong> - How the day will flow</li>
+                        <li><strong>Peer connections</strong> - Who you'll collaborate with</li>
+                    </ul>
+                    <p>Group formation is particularly important as tech careers involve significant teamwork and collaboration—you'll practice these skills throughout the workshop.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Importance of Portfolios -->
+        <div class="slide" id="slide4">
+            <h2 class="slide-title">The Importance of Portfolios in Tech (09:15 - 09:30)</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Why every tech student needs a portfolio</li>
+                    <li>Examples of effective student portfolios</li>
+                    <li>How portfolios help in job hunting and professional networking</li>
+                    <li>Introduction to Git/GitHub and its importance in tech collaboration</li>
+                </ul>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>This foundational knowledge provides critical context:</p>
+                    <ul>
+                        <li><strong>Career readiness</strong> - Portfolios are often more important than resumes in tech hiring</li>
+                        <li><strong>Skill demonstration</strong> - Shows what you can actually build, not just what you claim to know</li>
+                        <li><strong>Professional presence</strong> - Creates your digital identity in the tech community</li>
+                        <li><strong>Learning motivation</strong> - Understanding "why" makes the technical "how" more engaging</li>
+                    </ul>
+                    <p>For beginners, seeing real examples helps visualize what you're working toward and sets realistic expectations.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Git & GitHub Setup -->
+        <div class="slide" id="slide5">
+            <h2 class="slide-title">Git & GitHub Setup (09:30 - 10:00)</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Installing Git (pre-installation instructions sent beforehand)</li>
+                    <li>Creating GitHub accounts</li>
+                    <li>Configuring Git (username, email)</li>
+                    <li>Understanding basic Git concepts (repositories, commits, branches)</li>
+                    <li>Hands-on activity: Configuring Git and creating first repository</li>
+                </ul>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>This technical foundation is crucial because:</p>
+                    <ul>
+                        <li><strong>Industry standard</strong> - Git is used by virtually every tech company</li>
+                        <li><strong>Version control</strong> - Prevents work loss and enables safe experimentation</li>
+                        <li><strong>GitHub profile</strong> - Functions as your coding resume and portfolio container</li>
+                        <li><strong>Practical setup</strong> - Gets you past the initial technical hurdles with support</li>
+                    </ul>
+                    <p>Many beginners struggle with Git setup on their own. Having guided assistance removes this common barrier to entry.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collaborative Git Workflow -->
+        <div class="slide" id="slide6">
+            <h2 class="slide-title">Collaborative Git Workflow (10:00 - 10:30)</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Introduction to collaborative Git workflows</li>
+                    <li>Understanding branches, pull requests, and merges</li>
+                    <li>Handling merge conflicts</li>
+                    <li>Hands-on activity: Teams collaborate on a simple project
+                        <ul>
+                            <li>Each team member makes changes to different files</li>
+                            <li>Pushing changes and resolving simple conflicts</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>This collaborative experience provides essential skills:</p>
+                    <ul>
+                        <li><strong>Team coordination</strong> - Reflects real-world development environments</li>
+                        <li><strong>Conflict resolution</strong> - Teaches how to handle overlapping changes</li>
+                        <li><strong>Branching strategy</strong> - Introduces safe ways to develop new features</li>
+                        <li><strong>Professional workflow</strong> - Mimics industry practices for code review and integration</li>
+                    </ul>
+                    <p>Working through actual conflicts in a supportive environment builds confidence—something difficult to achieve through solo practice.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Break & Troubleshooting -->
+        <div class="slide" id="slide7">
+            <h2 class="slide-title">Break & Troubleshooting (10:30 - 10:45)</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Break</li>
+                    <li>One-on-one help with Git setup issues</li>
+                    <li>Q&A session</li>
+                </ul>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>Strategic breaks serve multiple purposes:</p>
+                    <ul>
+                        <li><strong>Mental reset</strong> - Prevents cognitive overload with new technical concepts</li>
+                        <li><strong>Personalized help</strong> - Addresses individual challenges before they become blockers</li>
+                        <li><strong>Peer learning</strong> - Encourages informal knowledge exchange among participants</li>
+                        <li><strong>Question opportunity</strong> - Creates space for questions students might hesitate to ask in front of everyone</li>
+                    </ul>
+                    <p>For beginners especially, technical issues can quickly lead to frustration—this break ensures everyone can continue productively.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Fundamentals -->
+        <div class="slide" id="slide8">
+            <h2 class="slide-title">Portfolio Fundamentals (10:45 - 11:15)</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Introduction to HTML and CSS basics</li>
+                    <li>Understanding portfolio structure and components</li>
+                    <li>Cloning the portfolio template repository</li>
+                    <li>Walkthrough of template structure and customization points</li>
+                </ul>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>This session bridges technical knowledge and practical application:</p>
+                    <ul>
+                        <li><strong>Web fundamentals</strong> - Provides just enough HTML/CSS to make meaningful changes</li>
+                        <li><strong>Structure understanding</strong> - Teaches how websites are organized</li>
+                        <li><strong>Template approach</strong> - Prevents "blank page paralysis" common with beginners</li>
+                        <li><strong>Immediate application</strong> - Allows you to apply Git skills to a real project immediately</li>
+                    </ul>
+                    <p>Using a template is especially valuable for beginners—it provides professional structure while still allowing for personalization and learning.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collaborative Portfolio Customization -->
+        <div class="slide" id="slide9">
+            <h2 class="slide-title">Collaborative Portfolio Customization (11:15 - 11:45)</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Teams work together to customize portfolio template using Git</li>
+                    <li>Each team member is assigned specific sections to modify:
+                        <ul>
+                            <li>Team member 1: Header and navigation</li>
+                            <li>Team member 2: About section and skills</li>
+                            <li>Team member 3: Projects section</li>
+                            <li>Team member 4: Contact section and footer</li>
+                        </ul>
+                    </li>
+                    <li>Practice Git workflow: commit, push, pull, merge</li>
+                </ul>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>This hands-on session combines multiple critical skills:</p>
+                    <ul>
+                        <li><strong>Practical application</strong> - Applies Git concepts to a meaningful project</li>
+                        <li><strong>Division of labor</strong> - Teaches modular development approaches</li>
+                        <li><strong>Ownership and accountability</strong> - Each person has clear responsibilities</li>
+                        <li><strong>Workflow reinforcement</strong> - Builds muscle memory for Git operations</li>
+                    </ul>
+                    <p>As a beginner, you'll experience the satisfaction of seeing your collaborative work come together into a polished final product—a powerful motivator for continued learning.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hosting Your Portfolio & Wrap-up -->
+        <div class="slide" id="slide10">
+            <h2 class="slide-title">Hosting Your Portfolio & Wrap-up (11:45 - 12:00)</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Introduction to GitHub Pages and other free hosting options</li>
+                    <li>Demonstration of deploying the portfolio to GitHub Pages</li>
+                    <li>Final Q&A session</li>
+                    <li>Resources for further learning</li>
+                    <li>Workshop feedback collection</li>
+                </ul>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>The final session completes the practical journey:</p>
+                    <ul>
+                        <li><strong>Deployment skills</strong> - Teaches how to make your work publicly accessible</li>
+                        <li><strong>Immediate results</strong> - Provides the satisfaction of a live, shareable URL</li>
+                        <li><strong>Next steps</strong> - Offers clear pathways for continued learning</li>
+                        <li><strong>Feedback loop</strong> - Helps improve future workshops and reinforces your learning</li>
+                    </ul>
+                    <p>For beginners, seeing your work live on the internet is incredibly empowering—it transforms abstract concepts into tangible results you can share with friends, family, and potential employers.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collaborative Activities -->
+        <div class="slide" id="slide11">
+            <h2 class="slide-title">Collaborative Activities Structure</h2>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Activity 1: Git Basics (10:00 - 10:30)</h4>
+                        <ol>
+                            <li>Form teams of 3-4 students</li>
+                            <li>One student creates a repository and adds team members as collaborators</li>
+                            <li>Each student clones the repository</li>
+                            <li>Each student creates a file with their name with brief introduction</li>
+                            <li>Commit and push changes</li>
+                            <li>Pull changes from teammates</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Activity 2: Portfolio Customization (11:15 - 11:45)</h4>
+                        <ol>
+                            <li>Teams clone the portfolio template repository</li>
+                            <li>Assign sections to each team member</li>
+                            <li>Create branches for each section</li>
+                            <li>Make modifications to assigned sections</li>
+                            <li>Commit and push changes to respective branches</li>
+                            <li>Create pull requests to merge changes into main branch</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>Structured activities provide essential learning scaffolding:</p>
+                    <ul>
+                        <li><strong>Clear steps</strong> - Break complex tasks into manageable pieces</li>
+                        <li><strong>Practical application</strong> - Reinforce theoretical concepts through hands-on practice</li>
+                        <li><strong>Built-in checkpoints</strong> - Allow mentors to verify progress and provide help</li>
+                        <li><strong>Collaborative learning</strong> - Encourages learning from peers, not just instructors</li>
+                    </ul>
+                    <p>The progressive structure builds confidence gradually, ensuring beginners can successfully complete each step before moving to more complex tasks.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tips for Participants -->
+        <div class="slide" id="slide12">
+            <h2 class="slide-title">Tips for Participants</h2>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4><i class="bi bi-arrow-right-circle"></i> Before the Workshop</h4>
+                        <ul>
+                            <li>Create a GitHub account at github.com</li>
+                            <li>Install Git on your laptop</li>
+                            <li>Download a text editor (VS Code recommended)</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4><i class="bi bi-arrow-right-circle"></i> During Collaboration</h4>
+                        <ul>
+                            <li>Communicate with your team about what files you're editing</li>
+                            <li>Commit frequently with clear commit messages</li>
+                            <li>Pull before you push to avoid conflicts</li>
+                            <li>Ask mentors for help if you get stuck</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4><i class="bi bi-arrow-right-circle"></i> After the Workshop</h4>
+                        <ul>
+                            <li>Continue customizing your portfolio</li>
+                            <li>Update it regularly with new projects</li>
+                            <li>Share your GitHub profile on your resume and LinkedIn</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>Clear guidelines prevent common beginner pitfalls:</p>
+                    <ul>
+                        <li><strong>Preparation</strong> - Ensures technical prerequisites don't derail your learning</li>
+                        <li><strong>Best practices</strong> - Establishes good habits from the start</li>
+                        <li><strong>Long-term value</strong> - Shows how workshop skills extend beyond the classroom</li>
+                        <li><strong>Proactive approach</strong> - Encourages asking for help rather than struggling silently</li>
+                    </ul>
+                    <p>For beginners, knowing what's expected removes anxiety and allows you to focus on learning rather than wondering if you're "doing it right."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources -->
+        <div class="slide" id="slide13">
+            <h2 class="slide-title">Resources Provided</h2>
+            <div class="slide-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4><i class="bi bi-github"></i> Portfolio Template</h4>
+                        <p>GitHub repository with starter template for your portfolio website</p>
+                        
+                        <h4><i class="bi bi-journal-code"></i> Git Cheatsheet</h4>
+                        <p>Quick reference guide for essential Git commands</p>
+                        
+                        <h4><i class="bi bi-code-square"></i> HTML/CSS Guide</h4>
+                        <p>Reference guide for HTML and CSS fundamentals</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4><i class="bi bi-cloud-upload"></i> Hosting Platforms</h4>
+                        <p>List of free hosting options for your portfolio website</p>
+                        
+                        <h4><i class="bi bi-file-earmark-slides"></i> Workshop Slides</h4>
+                        <p>Digital slides covering all workshop topics</p>
+                    </div>
+                </div>
+                
+                <div class="importance-box">
+                    <h5 class="importance-title">Why This Matters for Beginners</h5>
+                    <p>Resource access extends learning beyond the workshop:</p>
+                    <ul>
+                        <li><strong>Reference materials</strong> - Provide help when you're working independently</li>
+                        <li><strong>Starting point</strong> - Eliminate the intimidation of starting from scratch</li>
+                        <li><strong>Structured guidance</strong> - Offer step-by-step instructions for common tasks</li>
+                        <li><strong>Continued learning</strong> - Enable you to build on workshop foundations</li>
+                    </ul>
+                    <p>As a beginner, having these resources means you won't be left on your own after the workshop ends—you'll have materials to refer to as you continue practicing and building your skills.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="slide" id="slide14">
+            <h2 class="slide-title">Thank You!</h2>
+            <div class="slide-content">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-8 text-center">
+                        <h3>Portfolio Setup, Hosting & GitHub Essentials</h3>
+                        <p class="lead">A hands-on workshop for ICT students</p>
+                        <p class="mt-4">
+                            <i class="bi bi-envelope me-2"></i>mutinnovationlab@gmail.com<br>
+                            <i class="bi bi-github me-2"></i>github.com/Jabulani00/portfolio-template
+                        </p>
+                        <p class="mt-5">We hope you'll use these skills to build an impressive portfolio!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="control-button" id="prevSlide">
+                <i class="bi bi-chevron-left"></i> Previous
+            </button>
+            <button class="control-button" id="nextSlide">
+                Next <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+        
+        <div class="slide-number">
+            Slide <span id="currentSlide">1</span> of <span id="totalSlides">14</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            let currentSlide = 1;
+            
+            document.getElementById('totalSlides').textContent = totalSlides;
+            
+            // Update slide number display
+            function updateSlideNumber() {
+                document.getElementById('currentSlide').textContent = currentSlide;
+            }
+            
+            // Show specific slide
+            function showSlide(slideNumber) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                document.getElementById('slide' + slideNumber).classList.add('active');
+                currentSlide = slideNumber;
+                updateSlideNumber();
+            }
+            
+            // Previous slide
+            document.getElementById('prevSlide').addEventListener('click', function() {
+                if (currentSlide > 1) {
+                    showSlide(currentSlide - 1);
+                }
+            });
+            
+            // Next slide
+            document.getElementById('nextSlide').addEventListener('click', function() {
+                if (currentSlide < totalSlides) {
+                    showSlide(currentSlide + 1);
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === 'Space') {
+                    document.getElementById('nextSlide').click();
+                } else if (e.key === 'ArrowLeft') {
+                    document.getElementById('prevSlide').click();
+                }
+            });
+        });
+    </script>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Hamburger menu script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const hamburger = document.querySelector('.floating-hamburger');
+            const slideMenu = document.querySelector('.slide-menu');
+            const overlay = document.querySelector('.menu-overlay');
+            const menuLinks = document.querySelectorAll('.menu-link');
+            
+            // Toggle menu function
+            function toggleMenu() {
+                hamburger.classList.toggle('active');
+                slideMenu.classList.toggle('active');
+                overlay.classList.toggle('active');
+                
+                // Prevent body scrolling when menu is open
+                if (slideMenu.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+            
+            // Event Listeners
+            hamburger.addEventListener('click', toggleMenu);
+            
+            // Close menu when clicking on overlay
+            overlay.addEventListener('click', toggleMenu);
+            
+            // Close menu when clicking a link
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    toggleMenu();
+                });
+            });
+            
+            // Close menu when pressing ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && slideMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+            
+            // Highlight active page
+            const currentPage = window.location.pathname.split("/").pop();
+            
+            menuLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                if (linkHref === currentPage || 
+                    (currentPage === '' && linkHref === 'index.html')) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Add subtle animation to hamburger on hover
+            hamburger.addEventListener('mouseenter', function() {
+                if (!hamburger.classList.contains('active')) {
+                    const spans = this.querySelectorAll('span');
+                    spans[0].style.width = '20px';
+                    spans[1].style.width = '15px';
+                    
+                    setTimeout(() => {
+                        spans[0].style.width = '25px';
+                        spans[1].style.width = '25px';
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
